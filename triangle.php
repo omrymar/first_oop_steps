@@ -1,66 +1,82 @@
 <?php
 
- class triangle
- {
-  public $side_a;
-  public $side_b;
-  public $side_c;
+abstract class triangle{
+  protected $side_a;
+  protected $side_b;
+  protected $side_c;
 
-  public function __construct()
-  {
-   $this->side_a = 5;
-   $this->side_b = 5;
-   $this->side_c = 5;
-  }
+  abstract function __construct($side_a = 5, $side_b = 5, $side_c = 5);
+  abstract function getPerimeter();
+  abstract function getArea();
 
-  public function get_side($a, $b, $c)
-  {
-   $this->side_a = $a;
-   $this->side_b = $b;
-   $this->side_c = $c;
-  }
-
-  /*public function get_a(){
-   $this->side_a;
-  }
-
-  public function get_b(){
-   $this->side_b;
-  }
-
-  public function get_c(){
-   $this->side_c;
-  }*/
-
- }
-
-function ret_res($class_name){
- //echo "{$class_name}"." triangle";
- echo "Side_a = ".$class_name->side_a."<br>";
- echo "Side_b = ".$class_name->side_b."<br>";
- echo "Side_c = ".$class_name->side_c."<br>";
- echo "Perimeter = ".$class_name->perimeter()."<br>";
- echo "Area = ".$class_name->area()."<br><br>";
 }
 
 class any_triangle extends triangle{
 
-  public function all_side(){
-
-  print("<br>");
-  //return array("Side_a" => $this->side_a,"Side_b"=> $this->side_b,"Side_c"=> $this->side_c,);
-   return $this->side_a;
-
-  echo "<br>";
+ /**
+  * @return mixed
+  */
+ public function getSideA()
+ {
+  return $this->side_a;
  }
 
- public function perimeter(){
+ /**
+  * @param mixed $side_a
+  */
+ public function setSideA($side_a)
+ {
+  $this->side_a = $side_a;
+ }
+
+ /**
+  * @return mixed
+  */
+ public function getSideB()
+ {
+  return $this->side_b;
+ }
+
+ /**
+  * @return mixed
+  */
+ public function getSideC()
+ {
+  return $this->side_c;
+ }
+
+ /**
+  * @param mixed $side_b
+  */
+ public function setSideB($side_b)
+ {
+  $this->side_b = $side_b;
+ }
+
+ /**
+  * @param mixed $side_c
+  */
+ public function setSideC($side_c)
+ {
+  $this->side_c = $side_c;
+ }
+
+  public function __construct($side_a = 5, $side_b = 5, $side_c = 5){
+
+ // print("<br>");
+  $this->side_a = $side_a;
+  $this->side_b = $side_b;
+  $this->side_c = $side_c;
+  //echo "<br>";
+ }
+
+ public function getPerimeter(){
    $perimeter = $this->side_a + $this->side_b + $this->side_c;
    return $perimeter;
    //echo "<br>";
  }
 
- public function area(){
+ public function getArea(){
   $half_perimeter = ($this->side_a + $this->side_b + $this->side_c)/2;
   $area = sqrt($half_perimeter*($half_perimeter - $this->side_a)*($half_perimeter - $this->side_b)*($half_perimeter - $this->side_c));
   return $area;
@@ -71,9 +87,9 @@ class any_triangle extends triangle{
 
 class rectangular_triangle extends any_triangle{
 
- public function area(){
-  $half_perimeter = ($this->side_a + $this->side_b + $this->side_c)/2;
-  $area = sqrt($half_perimeter*($half_perimeter - $this->side_a)*($half_perimeter - $this->side_b)*($half_perimeter - $this->side_c));
+  public function getArea(){
+   $half_perimeter = ($this->side_a + $this->side_b + $this->side_c)/2;
+   $area = sqrt($half_perimeter*($half_perimeter - $this->side_a)*($half_perimeter - $this->side_b)*($half_perimeter - $this->side_c));
   return $area;
  }
 
@@ -81,32 +97,41 @@ class rectangular_triangle extends any_triangle{
 
 class proper_triangle extends rectangular_triangle{
 
-  public function perimeter(){
+  public function getPerimeter(){
   //print("<br>");
   $perimeter = 3 * $this->side_a;
   return $perimeter;
   //echo "<br>";
  }
 
- public function area(){
+ public function getArea(){
   $area = $this->side_a*$this->side_a*sqrt(3)/4;
   return $area;
   //echo "<br>";
  }
 }
 
+function ret_res(triangle $triangle){
 
-$eny_triangle = new any_triangle;
-$eny_triangle->get_side(10,15,22);
+ echo $triangle->getSideA()."<br>";
+ echo $triangle->getSideB()."<br>";
+ echo $triangle->getSideB()."<br>";
+ echo $triangle->getPerimeter()."<br>";
+ echo $triangle->getArea()."<br>";
+}
+
+echo 'Any_triangle'."<br>";
+$eny_triangle = new any_triangle(14,12,5);
 ret_res($eny_triangle);
 
-$proper_triangle = new proper_triangle;
-$proper_triangle->get_side(10,10,10);
+echo 'Rectangular_triangle'."<br>";
+$rectangular_triangle = new rectangular_triangle(5,5,5);
+ret_res($rectangular_triangle);
+
+echo 'Proper_triangle'."<br>";
+$proper_triangle = new proper_triangle(3,4,5);
 ret_res($proper_triangle);
 
-$rectangular_triangle = new rectangular_triangle;
-$rectangular_triangle->get_side(3,4,5);
-ret_res($rectangular_triangle);
 
 
 
